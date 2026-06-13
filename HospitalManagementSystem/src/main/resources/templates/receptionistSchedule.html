@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Receptionist | Schedules</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        /* Global theme */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #e0f3ff, #f7fbff);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #1f2933;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .hospital-name {
+            font-size: 2rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #0b7285;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            margin-top: 6px;
+            font-size: 0.95rem;
+            color: #6c7a89;
+        }
+
+        /* Card */
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+            padding: 28px 24px 24px;
+            border: 1px solid #edf2f7;
+        }
+
+        @media (min-width: 640px) {
+            .card {
+                padding: 32px 36px 28px;
+            }
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #111827;
+        }
+
+        .card-description {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 18px;
+        }
+
+        /* Nav links */
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 7px 14px;
+            border-radius: 999px;
+            border: 1px solid #0ea5e9;
+            color: #0ea5e9;
+            background-color: #f0f9ff;
+            transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #0ea5e9;
+            color: #ffffff;
+            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35);
+        }
+
+        /* Table */
+        .data-table-wrapper {
+            overflow-x: auto;
+            margin-top: 6px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+            font-size: 0.92rem;
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: #ffffff;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 10px 14px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        .data-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #e0f2fe;
+        }
+
+        .table-caption {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="hospital-name">Hospital NovaCare</div>
+            <div class="subtitle">Receptionist Portal · Schedules</div>
+        </header>
+
+        <!-- Card -->
+        <section class="card">
+            <h1 class="card-title">Doctor Schedules</h1>
+            <p class="card-description">
+                Overview of doctors' scheduled events and availability.
+            </p>
+
+            <div class="nav-links">
+                <a th:href="@{/receptionist}">Homepage</a>
+            </div>
+
+            <div class="data-table-wrapper">
+                <div class="table-caption">Schedules</div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Doctor Name</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Start</th>
+                            <th>Finish</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="event : ${events}">
+                            <td th:text="${event.name}"></td>
+                            <td th:text="${event.title}"></td>
+                            <td th:text="${event.description}"></td>
+                            <td th:text="${event.start}"></td>
+                            <td th:text="${event.finish}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

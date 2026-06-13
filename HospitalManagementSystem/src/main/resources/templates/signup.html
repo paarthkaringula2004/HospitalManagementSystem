@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Sign Up | Hospital NovaCare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        /* Global theme – same as other pages */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #e0f3ff, #f7fbff);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #1f2933;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .hospital-name {
+            font-size: 2rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #0b7285;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            margin-top: 6px;
+            font-size: 0.95rem;
+            color: #6c7a89;
+        }
+
+        /* Layout: info + form */
+        .content {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        /* Info card */
+        .info-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 16px;
+            padding: 24px 22px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .info-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+
+        .info-subtitle {
+            font-size: 0.95rem;
+            color: #6b7280;
+            margin-bottom: 18px;
+        }
+
+        .info-list {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .info-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .info-bullet {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            margin-top: 6px;
+            background: linear-gradient(135deg, #0ea5e9, #22c55e);
+        }
+
+        /* Sign up card */
+        .signup-card {
+            position: relative;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+            padding: 26px 22px 24px;
+            border: 1px solid #e5e7eb;
+        }
+
+        @media (min-width: 640px) {
+            .signup-card {
+                padding: 30px 28px 26px;
+            }
+        }
+
+        .signup-topbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 7px;
+            border-radius: 18px 18px 0 0;
+            background-image: linear-gradient(to right,
+                    #0ea5e9,
+                    #0ea5e9 18%,
+                    #22c55e 18%,
+                    #22c55e 36%,
+                    #facc15 36%,
+                    #f97316 54%,
+                    #fb7185 72%,
+                    #6366f1 90%,
+                    #0ea5e9 100%);
+        }
+
+        .signup-title {
+            margin-top: 6px;
+            margin-bottom: 4px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #111827;
+            text-align: left;
+        }
+
+        .signup-subtitle {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 18px;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        .field-group {
+            margin-bottom: 14px;
+        }
+
+        .field-label {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #4b5563;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .signup-input {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 0.95rem;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            outline: none;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+        }
+
+        .signup-input:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.28);
+            background-color: #ffffff;
+        }
+
+        .signup-input::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        .signup-button {
+            margin-top: 6px;
+            width: 100%;
+            padding: 11px 18px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(135deg, #0ea5e9, #22c55e);
+            color: #ffffff;
+            font-size: 0.98rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(34, 197, 94, 0.35);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+        }
+
+        .signup-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 36px rgba(34, 197, 94, 0.45);
+            opacity: 0.97;
+        }
+
+        .signup-button:active {
+            transform: translateY(0);
+            box-shadow: 0 9px 22px rgba(34, 197, 94, 0.4);
+        }
+
+        .login-hint {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #9ca3af;
+            text-align: center;
+        }
+
+        .login-hint a {
+            color: #0ea5e9;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-hint a:hover {
+            text-decoration: underline;
+        }
+
+        /* Alerts (from backend) */
+        .alert {
+            margin-top: 10px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .alert-success {
+            background-color: #ecfdf3;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .alert-error,
+        .alert-danger {
+            background-color: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="hospital-name">Hospital NovaCare</div>
+            <div class="subtitle">Join our patient portal in a few seconds</div>
+        </header>
+
+        <main class="content">
+            <!-- Left: marketing/info -->
+            <section class="info-card">
+                <h2 class="info-title">Why create an account?</h2>
+                <p class="info-subtitle">
+                    Manage all your hospital interactions securely in one place.
+                </p>
+                <ul class="info-list">
+                    <li>
+                        <span class="info-bullet"></span>
+                        <span>Book, reschedule, and cancel appointments anytime.</span>
+                    </li>
+                    <li>
+                        <span class="info-bullet"></span>
+                        <span>View prescriptions and visit history instantly.</span>
+                    </li>
+                    <li>
+                        <span class="info-bullet"></span>
+                        <span>Get reminders so you never miss an appointment.</span>
+                    </li>
+                    <li>
+                        <span class="info-bullet"></span>
+                        <span>Secure access to your medical records, 24/7.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Right: signup form -->
+            <section class="signup-card">
+                <div class="signup-topbar"></div>
+
+                <h1 class="signup-title">Create your account</h1>
+                <p class="signup-subtitle">
+                    It only takes a moment. Please use your real details so we can assist you better.
+                </p>
+
+                <!-- Uses GET so it matches @GetMapping("/signupp") in your controller -->
+                <form class="sign-up" action="/signupp" th:action="@{/signupp}" method="get">
+                    <div class="field-group">
+                        <label class="field-label" for="name">Full Name</label>
+                        <input id="name" name="name" type="text" class="signup-input" placeholder="Enter your full name"
+                            required />
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="username">Username</label>
+                        <input id="username" name="username" type="text" class="signup-input"
+                            placeholder="Choose a username" required />
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="password">Password</label>
+                        <input id="password" name="password" type="password" class="signup-input"
+                            placeholder="Create a strong password" required />
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="email">Email</label>
+                        <input id="email" name="email" type="email" class="signup-input"
+                            placeholder="Enter your email address" required />
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="phone">Phone</label>
+                        <input id="phone" name="phone" type="text" class="signup-input"
+                            placeholder="Enter your phone number" required />
+                    </div>
+
+                    <input type="submit" value="Sign me up" class="signup-button" />
+
+                    <!-- Optional: message from backend -->
+                    <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}">
+                    </div>
+
+                    <p class="login-hint">
+                        Already have an account?
+                        <a th:href="@{/login}">Log in here</a>
+                    </p>
+
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
